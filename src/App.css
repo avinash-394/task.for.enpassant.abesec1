@@ -1,7 +1,6 @@
 /* app.css - Themed for En Passant Chess Club
-
   This file contains global styles that might be used by a default app layout.
-  The colors have been updated to match the project's orange and dark theme.
+  The colors have been updated to use CSS variables for consistency.
 */
 
 #root {
@@ -18,16 +17,13 @@
   transition: filter 300ms;
 }
 
-/* --- CHANGE 1: Updated hover color --- */
-/* Replaced the default blue drop-shadow with the theme's primary orange. */
+/* --- CHANGE 1: Using CSS variable for hover color --- */
 .logo:hover {
-  /* HSL value corresponds to your --primary variable (hsl(14 82% 51%)) */
-  filter: drop-shadow(0 0 2em #e8491eaa); 
+  filter: drop-shadow(0 0 2em hsl(var(--primary) / 0.9));
 }
 
-/* This class is specific to the React logo, also updated to orange for consistency. */
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #e8491eaa);
+  filter: drop-shadow(0 0 2em hsl(var(--primary) / 0.9));
 }
 
 @keyframes logo-spin {
@@ -39,20 +35,19 @@
   }
 }
 
-/* This is a good accessibility practice, no changes needed here. */
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
 }
 
+/* --- The `.card` utility is now in `globals.css` --- */
+/* This can be removed or kept for specific overrides */
 .card {
   padding: 2em;
 }
 
-/* --- CHANGE 2: Themed text color --- */
-/* Updated the default gray to use the theme's muted-foreground color for consistency. */
+/* --- CHANGE 2: Using CSS variable for themed text --- */
 .read-the-docs {
-  /* Corresponds to your --muted-foreground variable (hsl(0 0% 53%)) */
-  color: #888888;
+  color: hsl(var(--muted-foreground));
 }

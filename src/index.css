@@ -7,45 +7,47 @@
 @tailwind components;
 @tailwind utilities;
 
-/* --- 🎨 NEW: Dark Charcoal & Orange Theme --- */
+/* --- 🎨 REFRESHED: Brand Color & Gradient System --- */
 @layer base {
   :root {
-    /* A deep charcoal background that makes accents pop */
-    --background: 20 10% 10%;
-    --foreground: 210 20% 95%; /* Off-white for high contrast and comfort */
+    /* --- CORE PALETTE --- */
+    --background: 20 10% 10%; /* Deep Charcoal */
+    --foreground: 210 20% 95%; /* Off-White */
 
-    /* A subtle gradient for depth, from dark to slightly darker */
-    --background-gradient: linear-gradient(
-      135deg,
-      hsl(20, 10%, 12%) 0%,
-      hsl(20, 10%, 8%) 100%
-    );
-
-    /* Cards are a slightly lighter charcoal to create layers */
-    --card: 20 10% 15%;
+    --card: 20 10% 15%; /* Mid Charcoal */
     --card-foreground: 210 20% 95%;
 
-    /* The vibrant orange remains the star of the show */
-    --primary: 14 82% 51%;
-    --primary-foreground: 20 10% 10%; /* Dark text for high contrast on orange buttons */
+    /* --- PRIMARY ORANGE (UNCHANGED CORE) --- */
+    --primary: 14 82% 51%; /* Vibrant Orange */
+    --primary-foreground: 20 10% 10%;
 
-    --secondary: 14 82% 51%;
-    --secondary-foreground: 20 10% 10%;
-
+    /* --- NEW: ACCENT & SEMANTIC COLORS --- */
+    --accent-bright: 35 91% 55%; /* Electric Amber for highlights */
+    
     --muted: 20 10% 20%;
-    --muted-foreground: 210 15% 60%; /* Softer gray for less important text */
-
-    --accent: 14 82% 51%;
-    --accent-foreground: 20 10% 10%;
+    --muted-foreground: 210 15% 60%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 210 20% 95%;
 
     --border: 20 10% 20%;
     --input: 20 10% 25%;
-    --ring: 14 82% 51%; /* Orange for focus rings */
+    --ring: 14 82% 51%;
 
     --radius: 0.75rem;
+
+    /* --- NEW: GRADIENT SYSTEM --- */
+    
+    /* 1. Brand Gradients (for heroes, marketing) */
+    --gradient-brand-ignition: linear-gradient(135deg, hsl(var(--accent-bright)) 0%, hsl(var(--primary)) 100%);
+    --gradient-brand-solar-flare: radial-gradient(ellipse at center, hsl(var(--primary)), hsl(var(--background)) 70%);
+
+    /* 2. UI Gradients (for components) */
+    --gradient-ui-button: linear-gradient(to top, hsl(var(--primary) / 0.95), hsl(var(--primary)));
+    --gradient-text-focus: linear-gradient(to right, hsl(var(--foreground)), hsl(var(--muted-foreground)));
+
+    /* 3. Ambiance Gradients (for backgrounds) */
+    --gradient-ambiance-twilight: linear-gradient(135deg, hsl(20, 10%, 12%) 0%, hsl(20, 10%, 8%) 100%);
   }
 }
 
@@ -55,8 +57,8 @@
   }
 
   body {
-    /* The new background gradient is applied here */
-    background: var(--background-gradient, hsl(var(--background)));
+    /* Using the new Ambiance Gradient for the background */
+    background: var(--gradient-ambiance-twilight);
     @apply text-foreground;
     font-family: 'Lato', sans-serif;
   }
@@ -65,12 +67,10 @@
     scroll-behavior: smooth;
   }
 
-  /* Custom Fonts */
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Montserrat', sans-serif;
   }
 
-  /* Focus state */
   *:focus-visible {
     @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
   }
@@ -89,36 +89,39 @@
   ::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--muted-foreground));
   }
+}
 
-  /* Animations */
-  .animate-fade-in-up {
-    animation: fadeInUp 0.6s ease-out forwards;
+/* --- NEW: Gradient Utility Classes --- */
+@layer components {
+  .bg-gradient-ignition {
+    background: var(--gradient-brand-ignition);
   }
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+  .bg-gradient-solar-flare {
+    background: var(--gradient-brand-solar-flare);
   }
-  .animate-slide-in {
-    animation: slideIn 0.5s ease-out forwards;
+  .btn-primary {
+    @apply text-primary-foreground font-bold py-2 px-4 rounded-lg;
+    background: var(--gradient-ui-button);
+    transition: transform 0.2s ease;
   }
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateX(-20px); }
-    to { opacity: 1; transform: translateX(0); }
+  .btn-primary:hover {
+    transform: scale(1.05);
   }
+  .text-gradient-focus {
+    background: var(--gradient-text-focus);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
 
-  /* Hover Motion */
-  .move-hover:hover {
-    transform: translateY(-2px) scale(1.02);
-    transition: all 0.2s ease-in-out;
-  }
-
-  /* Card Style for dark theme */
+@layer utilities {
+    /* Enhanced Card Style for dark theme */
   .card {
-    @apply bg-card text-card-foreground rounded-xl shadow-lg; /* Enhanced shadow for dark mode */
+    @apply bg-card text-card-foreground rounded-xl shadow-lg;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
   .card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 20px hsla(var(--primary) / 0.1); /* Subtle orange glow on hover */
+    box-shadow: 0 8px 20px hsla(var(--primary) / 0.1);
   }
 }
