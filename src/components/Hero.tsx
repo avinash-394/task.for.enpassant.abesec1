@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { ArrowRight, LogIn, Trophy, Medal, Users } from "lucide-react";
-import { useEffect, useRef } from 'react';
+// src/components/Hero.js
 
-// Note: The custom icons (Discord, Whatsapp) are no longer needed
-// and have been replaced with icons from lucide-react.
+import { Button } from "@/components/ui/button";
+import { ArrowRight, LogIn } from "lucide-react";
+import { useEffect, useRef } from 'react';
+import { FaTrophy, FaMedal, FaAward, FaUsers } from "react-icons/fa";
 
 const Hero = () => {
   const canvasRef = useRef(null);
@@ -15,182 +15,164 @@ const Hero = () => {
 
     const ctx = canvas.getContext('2d');
     let particles = [];
-    let mouseX = 0;
-    let mouseY = 0;
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
 
-    class Particle {
+    // --- NEW: Chess Piece Particle Class ---
+    class ChessParticle {
       constructor() {
+        // All chess pieces in Unicode
+        const pieces = ['♔', '♕', '♖', '♗', '♘', '♙'];
+        this.character = pieces[Math.floor(Math.random() * pieces.length)];
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2.5 + 1;
-        this.speedX = (Math.random() - 0.5) * 0.5;
-        this.speedY = (Math.random() - 0.5) * 0.5;
-        this.opacity = Math.random() * 0.4 + 0.1;
-        this.maxOpacity = this.opacity;
-        this.color = this.getRandomColor();
-        this.originalX = this.x;
-        this.originalY = this.y;
-        this.angle = Math.random() * Math.PI * 2;
-        this.drift = Math.random() * 0.02 + 0.01;
-        this.pulseSpeed = Math.random() * 0.015 + 0.01;
-        this.pulsePhase = Math.random() * Math.PI * 2;
-      }
-      
-      // UPDATED: New color palette for the chess club theme
-      getRandomColor() {
-        const colors = [
-          'rgba(232, 73, 30, ',   // Primary Orange: hsl(14 82% 51%)
-          'rgba(245, 245, 245, ', // Off-White
-          'rgba(239, 103, 58, ',  // Lighter Orange
-        ];
-        return colors[Math.floor(Math.random() * colors.length)];
+        this.size = Math.random() * 20 + 15; // Larger size for visibility
+        this.speedX = (Math.random() - 0.5) * 0.3;
+        this.speedY = (Math.random() - 0.5) * 0.3;
+        this.opacity = Math.random() * 0.05 + 0.02; // Very subtle
+        this.baseOpacity = this.opacity;
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.002;
       }
 
       update() {
-        this.angle += this.drift;
-        this.pulsePhase += this.pulseSpeed;
-        
-        const floatX = Math.sin(this.angle) * 20;
-        const floatY = Math.cos(this.angle * 0.7) * 15;
-        
-        this.x = this.originalX + floatX + this.speedX;
-        this.y = this.originalY + floatY + this.speedY;
-        
-        this.opacity = this.maxOpacity + Math.sin(this.pulsePhase) * 0.05;
+        // Drifting motion
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.rotation += this.rotationSpeed;
 
-        // Wrap around edges
-        if (this.x < -20) { this.x = canvas.width + 20; this.originalX = this.x; }
-        if (this.x > canvas.width + 20) { this.x = -20; this.originalX = this.x; }
-        if (this.y < -20) { this.y = canvas.height + 20; this.originalY = this.y; }
-        if (this.y > canvas.height + 20) { this.y = -20; this.originalY = this.y; }
-
+        // Mouse parallax effect
         const dx = mouseX - this.x;
         const dy = mouseY - this.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        if (distance < 150) {
-          const force = (150 - distance) / 150;
-          this.x -= dx * force * 0.015;
-          this.y -= dy * force * 0.015;
-          this.opacity = Math.min(this.maxOpacity * 2, this.opacity + force * 0.2);
-          this.size = Math.min(4, this.size + force * 1);
-        } else {
-          this.size = Math.max(1, this.size - 0.03);
-        }
+        this.x += dx * 0.001;
+        this.y += dy * 0.001;
+
+        // Wrap around edges
+        if (this.x < -this.size) this.x = canvas.width + this.size;
+        if (this.x > canvas.width + this.size) this.x = -this.size;
+        if (this.y < -this.size) this.y = canvas.height + this.size;
+        if (this.y > canvas.height + this.size) this.y = -this.size;
       }
 
       draw() {
         ctx.save();
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = this.color + this.opacity + ')';
-        
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = this.color + this.opacity + ')';
-        ctx.fill();
-        
+        ctx.globalAlpha = this.opacity;
+        ctx.font = `${this.size}px "Segoe UI Symbol"`; // Font that supports chess symbols
+        ctx.fillStyle = `hsl(var(--foreground))`;
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.fillText(this.character, -this.size / 2, this.size / 2);
         ctx.restore();
       }
     }
 
-    const initElements = () => {
+    const init = () => {
       particles = [];
-      const particleCount = Math.min(100, Math.floor((canvas.width * canvas.height) / 15000));
+      const particleCount = Math.floor(canvas.width / 50); // Density based on screen width
       for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
+        particles.push(new ChessParticle());
       }
     };
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => { p.update(); p.draw(); });
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
       animationIdRef.current = requestAnimationFrame(animate);
     };
 
     const handleMouseMove = (e) => {
-      const rect = canvas.getBoundingClientRect();
-      mouseX = e.clientX - rect.left;
-      mouseY = e.clientY - rect.top;
+      mouseX = e.clientX;
+      mouseY = e.clientY;
     };
 
     resizeCanvas();
-    initElements();
+    init();
     animate();
 
-    window.addEventListener('resize', () => { resizeCanvas(); initElements(); });
-    canvas.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('resize', () => { resizeCanvas(); init(); });
+    window.addEventListener('mousemove', handleMouseMove);
 
     return () => {
-      if (animationIdRef.current) cancelAnimationFrame(animationIdRef.current);
+      cancelAnimationFrame(animationIdRef.current);
       window.removeEventListener('resize', resizeCanvas);
-      canvas.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
 
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-background font-lato">
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 z-0"
-        style={{ background: 'transparent' }}
-      />
+      {/* Canvas for animated background */}
+      <canvas ref={canvasRef} className="absolute inset-0 z-0" />
       
+      {/* Radial gradient overlay for depth */}
+      <div className="absolute inset-0 bg-background/50 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-4xl mx-auto">
           {/* Main Heading */}
-          <h1 className="font-montserrat font-extrabold text-5xl sm:text-6xl lg:text-7xl leading-tight mb-4 text-foreground">
+          <h1 
+            className="font-montserrat font-extrabold text-5xl sm:text-6xl lg:text-7xl leading-tight mb-4 text-foreground"
+            style={{ textShadow: '0 0 15px hsl(var(--primary)/0.3)' }} // Added glow effect
+          >
             En Passant
-            <span className="block text-4xl sm:text-5xl lg:text-6xl text-primary mt-2">The ABESEC Chess Forum</span>
+            <span className="block text-4xl sm:text-5xl lg:text-6xl text-primary mt-2">
+              The ABESEC Chess Forum
+            </span>
           </h1>
-          
+
           {/* Subheading */}
           <p className="text-lg sm:text-xl text-muted-foreground mb-10 max-w-3xl mx-auto leading-relaxed">
-            The official chess club of ABESEC. We are a community of thinkers, strategists, and champions dedicated to mastering the art of chess.
+            The official chess club of ABESEC. We are a community of thinkers,
+            strategists, and champions dedicated to mastering the art of chess.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button 
+            <Button
               asChild
-              size="lg" 
-              className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-6 group w-full sm:w-auto"
+              size="lg"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-6 group w-full sm:w-auto shadow-lg shadow-primary/20 transition-all hover:shadow-xl hover:shadow-primary/30"
             >
-              <a href="https://www.chess.com/club/en-passant-abesec">
-                <LogIn className="w-5 h-5 mr-3" />Join The Club
+              <a href="https://www.chess.com/club/en-passant-abesec" target="_blank" rel="noopener noreferrer">
+                <LogIn className="w-5 h-5 mr-3" />
+                Join The Club
                 <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform" />
               </a>
             </Button>
-            
           </div>
 
           {/* Social Proof / Achievements */}
           <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 text-muted-foreground">
-            <p className="font-semibold text-foreground text-sm w-full sm:w-auto mb-2 sm:mb-0">Our Recent Wins:</p>
+            <p className="font-semibold text-foreground text-sm w-full sm:w-auto mb-2 sm:mb-0">
+              Our Recent Wins:
+            </p>
             <div className="flex items-center space-x-2">
-              <Trophy className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-foreground">Rann'25 Team</span>
+              <FaTrophy className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium text-foreground">
+                Rann'25 Team 🏆
+              </span>
             </div>
             <div className="flex items-center space-x-2">
-              <Medal className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-foreground">AKTU Zonals'24 Open</span>
+              <FaMedal className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium text-foreground">
+                AKTU Zonals'24 Open 🥈
+              </span>
             </div>
             <div className="flex items-center space-x-2">
-              <Users className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-foreground">ICCC Spring'25 Teams</span>
+              <FaUsers className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium text-foreground">
+                ICCC Spring'25 Teams 🥇🥈
+              </span>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-primary rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-primary rounded-full mt-2 animate-pulse"></div>
         </div>
       </div>
     </section>

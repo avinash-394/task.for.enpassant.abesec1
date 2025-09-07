@@ -1,5 +1,5 @@
 /*
-  1. Import Google Fonts: Montserrat for headings, Lato for body text.
+  Fonts: Montserrat for headings, Lato for body
 */
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700;800&display=swap');
 
@@ -7,46 +7,43 @@
 @tailwind components;
 @tailwind utilities;
 
-/* IMPORTANT: To use the custom fonts 'Montserrat' and 'Lato' with Tailwind classes 
-  (e.g., font-montserrat, font-lato), you must add them to your tailwind.config.js file.
-*/
+/* --- 🎨 NEW: Dark Charcoal & Orange Theme --- */
 @layer base {
   :root {
-    /* Softer, cooler background for less eye strain */
-    --background: 38 38% 95%;          /* Very soft pastel beige */
-    --foreground: 28 7% 26%;           /* Deep Brown-Gray Text */
+    /* A deep charcoal background that makes accents pop */
+    --background: 20 10% 10%;
+    --foreground: 210 20% 95%; /* Off-white for high contrast and comfort */
 
-    /* Optional subtle gradient for depth */
+    /* A subtle gradient for depth, from dark to slightly darker */
     --background-gradient: linear-gradient(
       135deg,
-      hsl(38, 38%, 97%) 0%,
-      hsl(38, 38%, 93%) 100%
+      hsl(20, 10%, 12%) 0%,
+      hsl(20, 10%, 8%) 100%
     );
 
-    --card: 36 71% 97%;                /* Soft Ivory for cards */
-    --card-foreground: 28 7% 26%;
+    /* Cards are a slightly lighter charcoal to create layers */
+    --card: 20 10% 15%;
+    --card-foreground: 210 20% 95%;
 
-    --popover: 36 71% 97%;
-    --popover-foreground: 28 7% 26%;
+    /* The vibrant orange remains the star of the show */
+    --primary: 14 82% 51%;
+    --primary-foreground: 20 10% 10%; /* Dark text for high contrast on orange buttons */
 
-    --primary: 14 82% 51%;             /* Vibrant Orange from logo */
-    --primary-foreground: 36 71% 97%;  /* Soft Ivory text on orange buttons */
+    --secondary: 14 82% 51%;
+    --secondary-foreground: 20 10% 10%;
 
-    --secondary: 14 82% 51%;           /* Orange for border */
-    --secondary-foreground: 14 82% 51%;/* Orange for text */
+    --muted: 20 10% 20%;
+    --muted-foreground: 210 15% 60%; /* Softer gray for less important text */
 
-    --muted: 37 29% 91%;               /* Light Taupe for scrollbar */
-    --muted-foreground: 28 6% 50%;     /* Muted Brown-Gray for subheadings */
+    --accent: 14 82% 51%;
+    --accent-foreground: 20 10% 10%;
 
-    --accent: 14 82% 51%;              /* Vibrant Orange */
-    --accent-foreground: 36 71% 97%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 20% 95%;
 
-    --destructive: 2 62% 58%;          /* Muted but clear Red */
-    --destructive-foreground: 36 71% 97%;
-
-    --border: 37 29% 91%;              /* Light Taupe for borders */
-    --input: 36 71% 97%;
-    --ring: 14 82% 51%;                /* Orange for focus rings */
+    --border: 20 10% 20%;
+    --input: 20 10% 25%;
+    --ring: 14 82% 51%; /* Orange for focus rings */
 
     --radius: 0.75rem;
   }
@@ -58,7 +55,7 @@
   }
 
   body {
-    /* Use gradient or fallback color */
+    /* The new background gradient is applied here */
     background: var(--background-gradient, hsl(var(--background)));
     @apply text-foreground;
     font-family: 'Lato', sans-serif;
@@ -68,38 +65,60 @@
     scroll-behavior: smooth;
   }
 
-  .animate-fade-in-up {
-    animation: fadeInUp 0.6s ease-out forwards;
+  /* Custom Fonts */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
   }
 
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
+  /* Focus state */
   *:focus-visible {
     @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
   }
 
+  /* Scrollbar styled to match the new dark theme */
   ::-webkit-scrollbar {
     width: 8px;
   }
-
   ::-webkit-scrollbar-track {
-    @apply bg-background;
+    background: hsl(var(--background));
   }
-
   ::-webkit-scrollbar-thumb {
-    @apply bg-muted rounded-full;
+    background: hsl(var(--muted));
+    @apply rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground));
   }
 
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-muted-foreground;
+  /* Animations */
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-slide-in {
+    animation: slideIn 0.5s ease-out forwards;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Hover Motion */
+  .move-hover:hover {
+    transform: translateY(-2px) scale(1.02);
+    transition: all 0.2s ease-in-out;
+  }
+
+  /* Card Style for dark theme */
+  .card {
+    @apply bg-card text-card-foreground rounded-xl shadow-lg; /* Enhanced shadow for dark mode */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px hsla(var(--primary) / 0.1); /* Subtle orange glow on hover */
   }
 }
