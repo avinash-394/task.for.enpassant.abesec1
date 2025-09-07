@@ -30,8 +30,7 @@ const Header = () => {
 
   const navLinks = [
     { name: "Opening Moves", href: "/" },
-    { name: "Grandmasters", href: "/Grandmasters" },
-    { name: "Tournaments", href: "/tournaments" },
+    { name: "Grandmasters", href: "/Grandmasters" },  
     { name: "Gallery", href: "/gallery" },
   ];
 
@@ -155,19 +154,19 @@ const Header = () => {
         </nav>
 
         <div className="p-6 border-t border-border space-y-3 sm:hidden">
-          <Button asChild size="lg" className="w-full" variant="outline">
-            <a href="https://discord.gg/FJwJJEBaxd" target="_blank" rel="noopener noreferrer">
-              <Discord className="w-5 h-5 mr-2" />
-              Join our Discord
-            </a>
-          </Button>
-          <Button asChild size="lg" className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
-            <a href="https://www.chess.com/club/en-passant-abesec" target="_blank" rel="noopener noreferrer">
-              <Chess className="w-5 h-5 mr-2" />
-              Join on Chess.com
-            </a>
-          </Button>
-        </div>
+  <Button asChild size="lg" className="w-full" variant="outline">
+    <a href="https://discord.gg/FJwJJEBaxd" target="_blank" rel="noopener noreferrer">
+      <Discord className="w-5 h-5 mr-2" />
+      Chat with Fellow Masters
+    </a>
+  </Button>
+  <Button asChild size="lg" className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+    <a href="https://www.chess.com/club/en-passant-abesec" target="_blank" rel="noopener noreferrer">
+      <Chess className="w-5 h-5 mr-2" />
+      Challenge the Champions
+    </a>
+  </Button>
+</div>
       </aside>
 
       {/* Animation keyframes (can be moved to your global CSS file) */}
