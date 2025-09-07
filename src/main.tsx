@@ -24,11 +24,11 @@ const router = createBrowserRouter(
           element: <Index />,
         },
         {
-          path: "Grandmasters",
+          path: "grandmasters",
           element: <Grandmasters />,
         },
         {
-          path: "Gallery",
+          path: "gallery",
           element: <Gallery />,
         },
         // You can add more routes here, like:
