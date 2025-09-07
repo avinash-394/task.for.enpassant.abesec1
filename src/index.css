@@ -1,0 +1,105 @@
+/*
+  1. Import Google Fonts: Montserrat for headings, Lato for body text.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* IMPORTANT: To use the custom fonts 'Montserrat' and 'Lato' with Tailwind classes 
+  (e.g., font-montserrat, font-lato), you must add them to your tailwind.config.js file.
+*/
+@layer base {
+  :root {
+    /* Softer, cooler background for less eye strain */
+    --background: 38 38% 95%;          /* Very soft pastel beige */
+    --foreground: 28 7% 26%;           /* Deep Brown-Gray Text */
+
+    /* Optional subtle gradient for depth */
+    --background-gradient: linear-gradient(
+      135deg,
+      hsl(38, 38%, 97%) 0%,
+      hsl(38, 38%, 93%) 100%
+    );
+
+    --card: 36 71% 97%;                /* Soft Ivory for cards */
+    --card-foreground: 28 7% 26%;
+
+    --popover: 36 71% 97%;
+    --popover-foreground: 28 7% 26%;
+
+    --primary: 14 82% 51%;             /* Vibrant Orange from logo */
+    --primary-foreground: 36 71% 97%;  /* Soft Ivory text on orange buttons */
+
+    --secondary: 14 82% 51%;           /* Orange for border */
+    --secondary-foreground: 14 82% 51%;/* Orange for text */
+
+    --muted: 37 29% 91%;               /* Light Taupe for scrollbar */
+    --muted-foreground: 28 6% 50%;     /* Muted Brown-Gray for subheadings */
+
+    --accent: 14 82% 51%;              /* Vibrant Orange */
+    --accent-foreground: 36 71% 97%;
+
+    --destructive: 2 62% 58%;          /* Muted but clear Red */
+    --destructive-foreground: 36 71% 97%;
+
+    --border: 37 29% 91%;              /* Light Taupe for borders */
+    --input: 36 71% 97%;
+    --ring: 14 82% 51%;                /* Orange for focus rings */
+
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    /* Use gradient or fallback color */
+    background: var(--background-gradient, hsl(var(--background)));
+    @apply text-foreground;
+    font-family: 'Lato', sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  *:focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground;
+  }
+}
