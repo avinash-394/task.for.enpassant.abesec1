@@ -46,7 +46,7 @@ const Hero = () => {
 >
               <a href="https://www.chess.com/club/en-passant-abesec" target="_blank" rel="noopener noreferrer">
                 
-    Join The Club
+    Join us on Chess.com
                 <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform" />
   </a>
 </Button>

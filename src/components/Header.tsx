@@ -33,7 +33,7 @@ const Header = () => {
             <a href="/" className="group flex items-center gap-3 shrink-0">
               <div className="w-10 h-10 rounded-lg overflow-hidden shadow-lg transition-transform duration-300 group-hover:rotate-6">
                 <img
-                  src="/assets/images/logo.png"
+                  src="/logo.png"
                   alt="En Passant Logo"
                   className="w-full h-full object-cover"
                 />

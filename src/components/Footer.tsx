@@ -33,7 +33,7 @@ const Footer = () => {
             <div className="flex flex-col md:flex-row items-center md:items-start md:space-x-3 mb-6">
               <div className="w-12 h-12 rounded-full overflow-hidden shadow-md">
                 <img
-                  src="/assets/images/logo.png"
+                  src="/logo.png"
                   alt="En Passant Logo"
                   className="w-full h-full object-cover"
                 />
