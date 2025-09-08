@@ -1,37 +1,24 @@
-// src/components/Header.jsx
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
-import { Discord, Chess } from "./icons"; // Assuming these are your custom SVG icons
+import { Link as ScrollLink } from "react-scroll"; // ✅ react-scroll
+import { Discord, Chess } from "./icons"; // your custom icons
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const location = useLocation();
 
-  // Effect to close the menu when the route changes
+  // Prevent body scroll when menu is open
   useEffect(() => {
-    setIsMenuOpen(false);
-  }, [location.pathname]);
-
-  // Effect to prevent background scrolling when the menu is open
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-    // Cleanup function to restore scrolling when the component unmounts
+    document.body.style.overflow = isMenuOpen ? "hidden" : "auto";
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     };
   }, [isMenuOpen]);
 
   const navLinks = [
-    { name: "Opening Moves", href: "/" },
-    { name: "Grandmasters", href: "/Grandmasters" },  
-    { name: "Gallery", href: "/gallery" },
+    { name: "Opening Moves", to: "home" },
+    { name: "Grandmasters", to: "grandmasters" },
+    { name: "Gallery", to: "gallery" },
   ];
 
   return (
@@ -42,8 +29,8 @@ const Header = () => {
           <div className="flex justify-between items-center h-16">
             
             {/* Logo */}
-            <Link to="/" className="group flex items-center gap-3 shrink-0">
-              <div className="w-10 h-10 rounded-lg overflow-hidden  shadow-lg transition-transform duration-300 group-hover:rotate-6">
+            <a href="/" className="group flex items-center gap-3 shrink-0">
+              <div className="w-10 h-10 rounded-lg overflow-hidden shadow-lg transition-transform duration-300 group-hover:rotate-6">
                 <img
                   src="/assets/images/logo.png"
                   alt="En Passant Logo"
@@ -53,29 +40,34 @@ const Header = () => {
               <span className="font-montserrat font-extrabold text-xl tracking-tight text-foreground group-hover:text-primary transition-colors">
                 En Passant
               </span>
-            </Link>
+            </a>
 
-            {/* Desktop Navigation (Centered) */}
+            {/* Desktop Navigation */}
             <nav className="hidden lg:flex absolute left-1/2 -translate-x-1/2">
               <ul className="flex items-center space-x-8">
                 {navLinks.map((link) => (
                   <li key={link.name}>
-                    <Link
-                      to={link.href}
-                      className="relative font-medium text-foreground/80 hover:text-primary transition-colors after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+                    <ScrollLink
+                      to={link.to}
+                      smooth={true}
+                      duration={150}
+                      spy={true}
+                      offset={-64} // adjust for fixed header
+                      activeClass="text-primary after:w-full"
+                      className="cursor-pointer relative font-medium text-foreground/80 hover:text-primary transition-colors after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
                     >
                       {link.name}
-                    </Link>
+                    </ScrollLink>
                   </li>
                 ))}
               </ul>
             </nav>
 
-            {/* Right-side Actions: Desktop CTAs + Mobile Menu Toggle */}
+            {/* Right Actions */}
             <div className="flex items-center space-x-2">
               <div className="hidden sm:flex items-center space-x-2">
                 <Button asChild variant="ghost" className="text-muted-foreground hover:text-primary hover:bg-primary/10">
-                  <a href="https://discord.gg/FJwJJEBaxd" target="_blank" rel="noopener noreferrer" aria-label="Join our Discord server">
+                  <a href="https://discord.gg/FJwJJEBaxd" target="_blank" rel="noopener noreferrer">
                     <Discord className="w-5 h-5" />
                   </a>
                 </Button>
@@ -94,8 +86,6 @@ const Header = () => {
                   size="icon"
                   onClick={() => setIsMenuOpen(true)}
                   aria-label="Open navigation menu"
-                  aria-expanded={isMenuOpen}
-                  aria-controls="mobile-nav-panel"
                 >
                   <Menu className="w-6 h-6" />
                 </Button>
@@ -105,21 +95,16 @@ const Header = () => {
         </div>
       </header>
 
-      {/* --- Slide-in Navigation Panel --- */}
-      {/* Backdrop */}
-      <div 
+      {/* --- Mobile Slide-in Panel --- */}
+      <div
         onClick={() => setIsMenuOpen(false)}
         className={`fixed inset-0 z-[98] bg-black/40 backdrop-blur-sm transition-opacity duration-300 lg:hidden
-          ${isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`
-        }
+          ${isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
       />
       
-      {/* Panel */}
-      <aside 
-        id="mobile-nav-panel"
+      <aside
         className={`fixed top-0 right-0 z-[99] h-full w-4/5 max-w-sm bg-background border-l border-border flex flex-col transition-transform duration-300 ease-in-out lg:hidden
-          ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`
-        }
+          ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
       >
         <div className="flex items-center justify-between p-4 border-b border-border">
           <span className="font-montserrat font-bold text-lg">Menu</span>
@@ -136,40 +121,49 @@ const Header = () => {
         <nav className="flex-grow p-6">
           <ul className="flex flex-col space-y-4">
             {navLinks.map((link, index) => (
-              <li key={link.name}
-                  style={{ 
-                    animation: isMenuOpen ? `fadeInUp 0.3s ${index * 0.05 + 0.1}s ease-out forwards` : 'none',
-                    opacity: 0,
-                  }}
+              <li
+                key={link.name}
+                style={{
+                  animation: isMenuOpen
+                    ? `fadeInUp 0.3s ${index * 0.05 + 0.1}s ease-out forwards`
+                    : "none",
+                  opacity: 0,
+                }}
               >
-                <Link
-                  to={link.href}
+                <ScrollLink
+                  to={link.to}
+                  smooth={true}
+                  duration={150}
+                  spy={true}
+                  offset={-64}
+                  onClick={() => setIsMenuOpen(false)}
+                  activeClass="text-primary"
                   className="block w-full text-lg font-semibold text-foreground/80 rounded-md p-3 hover:bg-muted hover:text-primary transition-colors"
                 >
                   {link.name}
-                </Link>
+                </ScrollLink>
               </li>
             ))}
           </ul>
         </nav>
 
         <div className="p-6 border-t border-border space-y-3 sm:hidden">
-  <Button asChild size="lg" className="w-full" variant="outline">
-    <a href="https://discord.gg/FJwJJEBaxd" target="_blank" rel="noopener noreferrer">
-      <Discord className="w-5 h-5 mr-2" />
-      Chat with Fellow Masters
-    </a>
-  </Button>
-  <Button asChild size="lg" className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
-    <a href="https://www.chess.com/club/en-passant-abesec" target="_blank" rel="noopener noreferrer">
-      <Chess className="w-5 h-5 mr-2" />
-      Challenge the Champions
-    </a>
-  </Button>
-</div>
+          <Button asChild size="lg" className="w-full" variant="outline">
+            <a href="https://discord.gg/FJwJJEBaxd" target="_blank" rel="noopener noreferrer">
+              <Discord className="w-5 h-5 mr-2" />
+              Chat with Fellow Masters
+            </a>
+          </Button>
+          <Button asChild size="lg" className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+            <a href="https://www.chess.com/club/en-passant-abesec" target="_blank" rel="noopener noreferrer">
+              <Chess className="w-5 h-5 mr-2" />
+              Challenge the Champions
+            </a>
+          </Button>
+        </div>
       </aside>
 
-      {/* Animation keyframes (can be moved to your global CSS file) */}
+      {/* Animation */}
       <style>{`
         @keyframes fadeInUp {
           from { opacity: 0; transform: translateY(10px); }
