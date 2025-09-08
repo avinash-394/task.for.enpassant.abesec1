@@ -1,6 +1,6 @@
 import Hero from "@/components/Hero";
 import Grandmasters from "./Grandmasters";
-import Gallery from "./Gallery";
+import Events from "./Events";
 
 const Index = () => {
   return (
@@ -15,9 +15,9 @@ const Index = () => {
         <Grandmasters />
       </section>
 
-      {/* Gallery Section */}
-      <section id="gallery" className="min-h-screen">
-        <Gallery />
+      {/* Events Section */}
+      <section id="events" className="min-h-screen">
+        <Events />
       </section>
     </div>
   );

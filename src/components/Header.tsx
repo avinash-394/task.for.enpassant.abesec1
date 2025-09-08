@@ -18,7 +18,7 @@ const Header = () => {
   const navLinks = [
     { name: "Opening Moves", to: "home" },
     { name: "Grandmasters", to: "grandmasters" },
-    { name: "Gallery", to: "gallery" },
+    { name: "Events", to: "events" },
   ];
 
   return (
@@ -50,11 +50,11 @@ const Header = () => {
                     <ScrollLink
                       to={link.to}
                       smooth={true}
-                      duration={150}
+                      duration={125}
                       spy={true}
                       offset={-64} // adjust for fixed header
                       activeClass="text-primary after:w-full"
-                      className="cursor-pointer relative font-medium text-foreground/80 hover:text-primary transition-colors after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+                      className="cursor-pointer relative font-medium text-foreground/80 hover:text-primary transition-colors after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-200 hover:after:w-full"
                     >
                       {link.name}
                     </ScrollLink>
@@ -67,7 +67,7 @@ const Header = () => {
             <div className="flex items-center space-x-2">
               <div className="hidden sm:flex items-center space-x-2">
                 <Button asChild variant="ghost" className="text-muted-foreground hover:text-primary hover:bg-primary/10">
-                  <a href="https://discord.gg/FJwJJEBaxd" target="_blank" rel="noopener noreferrer">
+                  <a href="https://discord.com/invite/Edtgnxnc37" target="_blank" rel="noopener noreferrer">
                     <Discord className="w-5 h-5" />
                   </a>
                 </Button>
@@ -149,7 +149,7 @@ const Header = () => {
 
         <div className="p-6 border-t border-border space-y-3 sm:hidden">
           <Button asChild size="lg" className="w-full" variant="outline">
-            <a href="https://discord.gg/FJwJJEBaxd" target="_blank" rel="noopener noreferrer">
+            <a href="https://discord.com/invite/Edtgnxnc37" target="_blank" rel="noopener noreferrer">
               <Discord className="w-5 h-5 mr-2" />
               Chat with Fellow Masters
             </a>

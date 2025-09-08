@@ -9,7 +9,7 @@ import Index from "./pages/Index";
 import Grandmasters from "./pages/Grandmasters.tsx";
 
 import "./index.css";
-import Gallery from "./pages/Gallery.tsx";
+import Events from "./pages/Events.tsx";
 
 // 1. Define the application routes using the modern data router.
 // The App component now acts as the main layout for all child routes.
@@ -28,11 +28,10 @@ const router = createBrowserRouter(
           element: <Grandmasters />,
         },
         {
-          path: "gallery",
-          element: <Gallery />,
+          path: "events",
+          element: <Events />,
         },
-        // You can add more routes here, like:
-        // { path: "gallery", element: <Gallery /> },
+        
       ],
     },
   ],
