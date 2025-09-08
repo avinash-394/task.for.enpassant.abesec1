@@ -118,13 +118,13 @@ TeamMemberCard.displayName = 'TeamMemberCard';
 // --- This parent component remains unchanged as per instructions ---
 const ChessTeamPage = () => {
   const teamMembers: TeamMember[] = [
-    { id: "prezz", name: "Prem", post: "The Prezz", description: "Guiding the club's every move.", avatar: "/assets/images/6.png" },
-    { id: "vice-prezz", name: "Naina", post: "Vice Prezz", description: "The king's most trusted advisor.", avatar: "/assets/images/5.png" },
-    { id: "treasurer", name: "Priyanshu", post: "The Treasurer", description: "Guarding the treasury with precision.", avatar: "/assets/images/7.png" },
-    { id: "design-head", name: "Ayush", post: "Design Head", description: "Crafting our visual checkmate style.", avatar: "/assets/images/1.png" },
-    { id: "media-head", name: "Priyansh", post: "Media Head", description: "Broadcasting our brilliant every move.", avatar: "/assets/images/2.png" },
+    { id: "prezz", name: "Prem Singh", post: "The Prezz", description: "Guiding the club's every move.", avatar: "/assets/images/6.png" },
+    { id: "vice-prezz", name: "Naina Srivastava", post: "Vice Prezz", description: "The king's most trusted advisor.", avatar: "/assets/images/5.png" },
+    { id: "treasurer", name: "Priyanshu Jha", post: "The Treasurer", description: "Guarding the treasury with precision.", avatar: "/assets/images/7.png" },
+    { id: "design-head", name: "Ayush Shakya", post: "Design Head", description: "Crafting our visual checkmate style.", avatar: "/assets/images/1.png" },
+    { id: "media-head", name: "Priyansh Saxena", post: "Media Head", description: "Broadcasting our brilliant every move.", avatar: "/assets/images/2.png" },
     { id: "promotion-head", name: "Ishita ", post: "Promotion Head", description: "Recruiting our next grandmasters.", avatar: "/assets/images/4.png" },
-    { id: "community-head", name: "Abhinav", post: "Community Head", description: "Building our strong, united kingdom.", avatar: "/assets/images/8.jpg" },
+    { id: "community-head", name: "Abhinav Anand", post: "Community Head", description: "Building our strong, united kingdom.", avatar: "/assets/images/8.jpg" },
     { id: "event-head", name: "Divyansh S", post: "Event Head", description: "Orchestrating our epic chess battles.", avatar: "/assets/images/3.png" },
   ];
 
