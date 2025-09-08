@@ -24,27 +24,13 @@ interface GalleryCardProps {
 const GALLERY_ITEMS: GalleryItem[] = [
   { id: 1, alt: "ACC", src: "/assets/gallery/1.png" },
   { id: 2, alt: "WCC", src: "/assets/gallery/5.png" },
-  { id: 3, alt: "Knightmares", src: "/assets/gallery/1.png" },
+  { id: 3, alt: "Knightmares", src: "/assets/gallery/3.png" },
   { id: 4, alt: "ShehMaat", src: "/assets/gallery/4.png" },
   { id: 5, alt: "HCC", src: "/assets/gallery/2.png" },
   { id: 6, alt: "CheckUsOut", src: "/assets/gallery/6.png" },
   { id: 7, alt: "Invalid Image", src: "/path/to/broken-image.png" },
 ];
 
-const BACKGROUND_IMAGES: BackgroundImage[] = [
-  { id: 'bg1', src: "/assets/gallery/1.png" },
-  { id: 'bg2', src: "/assets/gallery/2.png" },
-  { id: 'bg3', src: "/assets/gallery/4.png" },
-  { id: 'bg4', src: "/assets/gallery/5.png" },
-  { id: 'bg5', src: "/assets/gallery/6.png" },
-  { id: 'bg6', src: "/assets/gallery/1.png" },
-  { id: 'bg7', src: "/assets/gallery/2.png" },
-  { id: 'bg8', src: "/assets/gallery/4.png" },
-  { id: 'bg9', src: "/assets/gallery/5.png" },
-  { id: 'bg10', src: "/assets/gallery/6.png" },
-  { id: 'bg11', src: "/assets/gallery/1.png" },
-  { id: 'bg12', src: "/assets/gallery/2.png" },
-];
 
 
 // --- Memoized Child Component: GalleryCard (Typed) ---
@@ -226,18 +212,7 @@ const Gallery = () => {
       `}</style>
       
       <section className="gallery-container">
-        <div className="background-collage" aria-hidden="true">
-          {BACKGROUND_IMAGES.map((image) => (
-            <img
-              key={image.id}
-              src={image.src}
-              alt=""
-              className="bg-image-item"
-              onError={(e) => { e.currentTarget.style.display = 'none'; }}
-              loading="lazy"
-            />
-          ))}
-        </div>
+        
         
         <div className="main-content-container">
           <div className="title-wrapper">
