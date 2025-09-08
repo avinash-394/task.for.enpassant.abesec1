@@ -147,10 +147,11 @@ const Gallery = () => {
 
         /* --- Gallery Grid (Unchanged) --- */
         .gallery-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          gap: 2.5rem;
-        }
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
+  justify-items: center; /* <-- centers items in each column */
+}
 
         /* --- OPTIMIZATION: Simplified Card Styles --- */
         .gallery-card {
@@ -209,6 +210,59 @@ const Gallery = () => {
             font-size: 1.2rem;
             color: hsl(var(--muted-foreground));
         }
+            @media (max-width: 1024px) {
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+  }
+
+  .gallery-image-container {
+    height: 180px;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .gallery-image-container {
+    height: 150px;
+    padding: 0.75rem;
+  }
+
+  .gallery-caption {
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+
+  .gallery-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-grid {
+    grid-template-columns: 1fr; /* single column for small phones */
+    gap: 1rem;
+  }
+
+  .gallery-image-container {
+    height: 120px;
+    padding: 0.5rem;
+  }
+
+  .gallery-caption {
+    font-size: 0.9rem;
+    padding: 0.25rem;
+  }
+
+  .gallery-title {
+    font-size: 1.5rem;
+  }
+}
       `}</style>
       
       <section className="gallery-container">

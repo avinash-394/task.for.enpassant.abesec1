@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { Link as ScrollLink } from "react-scroll"; // ✅ react-scroll
 import { Discord, Chess } from "./icons"; // your custom icons
 
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -73,8 +74,8 @@ const Header = () => {
                 </Button>
                 <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20 hover:shadow-primary/30 transition-all hover:-translate-y-0.5">
                   <a href="https://www.chess.com/club/en-passant-abesec" target="_blank" rel="noopener noreferrer">
-                    <Chess className="w-4 h-4 mr-2" />
-                    Join Club
+                    <Chess className="w-5 h-5" />
+                    
                   </a>
                 </Button>
               </div>

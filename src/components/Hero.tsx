@@ -34,23 +34,22 @@ const Hero = () => {
 
           {/* Subheading */}
           <p className="text-lg sm:text-xl text-muted-foreground mb-10 max-w-3xl mx-auto leading-relaxed">
-            The official chess club of ABESEC. We are a community of thinkers,
-            strategists, and champions dedicated to mastering the art of chess.
+          A welcoming space for chess lovers to connect, learn, and enjoy the game together.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button
-              asChild
-              size="lg"
+<Button
+  asChild
+  size="lg"
               className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-6 group w-full sm:w-auto shadow-lg shadow-primary/20 transition-all hover:shadow-xl hover:shadow-primary/30"
-            >
+>
               <a href="https://www.chess.com/club/en-passant-abesec" target="_blank" rel="noopener noreferrer">
-                <LogIn className="w-5 h-5 mr-3" />
-                Join The Club
+                
+    Join The Club
                 <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform" />
-              </a>
-            </Button>
+  </a>
+</Button>
           </div>
 
           {/* Social Proof / Achievements */}
