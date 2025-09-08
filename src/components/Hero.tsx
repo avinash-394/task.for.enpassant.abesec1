@@ -25,6 +25,16 @@ const Hero = () => {
 
     // --- NEW: Chess Piece Particle Class ---
     class ChessParticle {
+      character: string;
+      x: number;
+      y: number;
+      size: number;
+      speedX: number;
+      speedY: number;
+      opacity: number;
+      baseOpacity: any;
+      rotation: number;
+      rotationSpeed: number;
       constructor() {
         // All chess pieces in Unicode
         const pieces = ['♔', '♕', '♖', '♗', '♘', '♙'];
