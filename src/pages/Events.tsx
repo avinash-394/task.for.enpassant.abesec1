@@ -241,7 +241,7 @@ const Gallery = () => {
         
         <div className="main-content-container">
           <div className="title-wrapper">
-            <h1 className="gallery-title">Our Clubs</h1>
+            <h1 className="gallery-title">Our Events</h1>
           </div>
           <div className="gallery-grid">
             {visibleGalleryItems.map((item) => (
